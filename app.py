@@ -505,46 +505,75 @@ def compress_image_losslessly(input_path: str, output_path: str) -> int:
 # GA-2 Q2
 def solve_github_pages_question():
     # Step 1: Define GitHub repository details
-    github_username = "anantsathe"  # Replace with your GitHub username
-    repo_name = "portfolio"  # Replace with the repository name
+    github_username = "anantsathe"  # Your GitHub username
+    repo_name = "gpt_app"  # Your repository name
     email = "22f1001679@ds.study.iitm.ac.in"
     github_token = os.getenv("GITHUB_TOKEN")  # Ensure token is set in env variables
-    
-    # Step 2: Create a new GitHub repository
-    repo_url = f"https://api.github.com/user/repos"
-    headers = {"Authorization": f"token {github_token}", "Accept": "application/vnd.github.v3+json"}
-    repo_data = {"name": repo_name, "private": False}
-    requests.post(repo_url, headers=headers, json=repo_data)
-    
-    # Step 3: Initialize a local repo, commit and push
-    os.system(f"git init")
+
+    if not github_token:
+        return {"error": "GitHub token is missing. Please set GITHUB_TOKEN in environment variables."}
+
+    headers = {
+        "Authorization": f"Bearer {github_token}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+
+    # Step 2: Check if repository already exists
+    repo_check_url = f"https://api.github.com/repos/{github_username}/{repo_name}"
+    response = requests.get(repo_check_url, headers=headers)
+
+    if response.status_code == 200:
+        print(f"✅ Repository '{repo_name}' already exists. Skipping creation...")
+    else:
+        print(f"🛠️ Creating repository '{repo_name}'...")
+        repo_create_url = "https://api.github.com/user/repos"
+        repo_data = {"name": repo_name, "private": False}
+
+        response = requests.post(repo_create_url, headers=headers, json=repo_data)
+
+        if response.status_code not in [200, 201]:
+            return {"error": "Failed to create GitHub repository", "details": response.json()}
+
+    # Step 3: Initialize a local Git repository
+    os.system("git init")
     os.system(f"git remote add origin https://github.com/{github_username}/{repo_name}.git")
-    index_html = f"""<html><body>
+
+    # Step 4: Create index.html with the email inside a comment
+    index_html_content = f"""<html><body>
     <!--email_off-->{email}<!--/email_off-->
     </body></html>"""
+
     with open("index.html", "w") as f:
-        f.write(index_html)
+        f.write(index_html_content)
+
+    # Step 5: Commit and push the changes
     os.system("git add .")
-    os.system("git commit -m 'Initial commit'")
+    os.system('git commit -m "Initial commit"')
+    os.system("git branch -M main")  # Ensure branch is 'main'
     os.system("git push -u origin main")
-    
-    # Step 4: Enable GitHub Pages
+
+    # Step 6: Enable GitHub Pages
     pages_url = f"https://api.github.com/repos/{github_username}/{repo_name}/pages"
     pages_data = {"source": {"branch": "main", "path": "/"}}
-    requests.post(pages_url, headers=headers, json=pages_data)
     
-    # Step 5: Wait for deployment
+    response = requests.post(pages_url, headers=headers, json=pages_data)
+    if response.status_code not in [200, 201]:
+        return {"error": "Failed to enable GitHub Pages", "details": response.json()}
+
+    print("🚀 GitHub Pages enabled. Waiting for deployment...")
     time.sleep(30)  # Allow time for deployment
-    
-    # Step 6: Construct the GitHub Pages URL
-    pages_url = f"https://{github_username}.github.io/{repo_name}/"
-    
-    # Step 7: Make the curl request
+
+    # Step 7: Construct the GitHub Pages URL
+    github_pages_url = f"https://{github_username}.github.io/{repo_name}/"
+
+    # Step 8: Send a curl request to verify the page
     api_url = "http://127.0.0.1:8000/api/"
-    files = {"question": (None, f"What is the GitHub Pages URL? The email is hidden inside: <!--email_off-->{email}<!--/email_off-->.")}
+    files = {
+        "question": (None, f"What is the GitHub Pages URL? The email is hidden inside: <!--email_off-->{email}<!--/email_off-->.")
+    }
     response = requests.post(api_url, files=files)
-    
-    return json.loads(response.text)
+
+    return {"GitHub Pages URL": github_pages_url, "API Response": json.loads(response.text)}
 
 @app.post("/api/")
 async def solve_assignment(
