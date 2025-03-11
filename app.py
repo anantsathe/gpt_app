@@ -534,11 +534,14 @@ def solve_github_pages_question():
         if response.status_code not in [200, 201]:
             return {"error": "Failed to create GitHub repository", "details": response.json()}
 
-    # Step 3: Initialize a local Git repository
+    # Step 3: Initialize Git repo (if not already initialized)
     os.system("git init")
-    os.system(f"git remote add origin https://github.com/{github_username}/{repo_name}.git")
 
-    # Step 4: Create index.html with the email inside a comment
+    # Step 4: Set remote URL with authentication
+    os.system(f"git remote remove origin")  # Remove existing remote (if any)
+    os.system(f"git remote add origin https://{github_username}:{github_token}@github.com/{github_username}/{repo_name}.git")
+
+    # Step 5: Create index.html with email inside a comment
     index_html_content = f"""<html><body>
     <!--email_off-->{email}<!--/email_off-->
     </body></html>"""
@@ -546,13 +549,13 @@ def solve_github_pages_question():
     with open("index.html", "w") as f:
         f.write(index_html_content)
 
-    # Step 5: Commit and push the changes
+    # Step 6: Commit and push changes without password prompt
     os.system("git add .")
     os.system('git commit -m "Initial commit"')
     os.system("git branch -M main")  # Ensure branch is 'main'
-    os.system("git push -u origin main")
+    os.system("git push -u origin main")  # No password prompt
 
-    # Step 6: Enable GitHub Pages
+    # Step 7: Enable GitHub Pages
     pages_url = f"https://api.github.com/repos/{github_username}/{repo_name}/pages"
     pages_data = {"source": {"branch": "main", "path": "/"}}
     
@@ -563,10 +566,10 @@ def solve_github_pages_question():
     print("🚀 GitHub Pages enabled. Waiting for deployment...")
     time.sleep(30)  # Allow time for deployment
 
-    # Step 7: Construct the GitHub Pages URL
+    # Step 8: Construct the GitHub Pages URL
     github_pages_url = f"https://{github_username}.github.io/{repo_name}/"
 
-    # Step 8: Send a curl request to verify the page
+    # Step 9: Send a curl request to verify the page
     api_url = "http://127.0.0.1:8000/api/"
     files = {
         "question": (None, f"What is the GitHub Pages URL? The email is hidden inside: <!--email_off-->{email}<!--/email_off-->.")
