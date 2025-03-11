@@ -502,81 +502,87 @@ def compress_image_losslessly(input_path: str, output_path: str) -> int:
         
     return compressed_size
 
-# GA-2 Q2
+# GA-2 Q3
+def wait_for_github_pages(username, repo_name, headers):
+    """Wait for GitHub Pages to be deployed."""
+    pages_url = f"https://api.github.com/repos/{username}/{repo_name}/pages"
+    
+    print("⌛ Waiting for GitHub Pages deployment...")
+    for _ in range(10):  # Try for ~5 minutes (30s * 10 attempts)
+        response = requests.get(pages_url, headers=headers)
+        if response.status_code == 200 and response.json().get("status") == "built":
+            print("✅ GitHub Pages is live!")
+            return True
+        time.sleep(30)  # Wait 30 seconds before retrying
+    
+    print("⚠️ GitHub Pages deployment timed out. Check your repository settings manually.")
+    return False
+
 def solve_github_pages_question():
-    # Step 1: Define GitHub repository details
-    github_username = "anantsathe"  # Your GitHub username
-    repo_name = "gpt_app"  # Your repository name
+    """Automate GitHub Pages setup."""
+    github_username = "anantsathe"  # Replace with your GitHub username
+    repo_name = "gpt_app"  # Repository name
     email = "22f1001679@ds.study.iitm.ac.in"
-    github_token = os.getenv("GITHUB_TOKEN")  # Ensure token is set in env variables
+    github_token = os.getenv("GITHUB_TOKEN")  # Ensure GITHUB_TOKEN is set in env
 
     if not github_token:
-        return {"error": "GitHub token is missing. Please set GITHUB_TOKEN in environment variables."}
+        print("❌ GitHub token not found. Please set GITHUB_TOKEN in environment variables.")
+        return
 
     headers = {
-        "Authorization": f"Bearer {github_token}",
+        "Authorization": f"token {github_token}",
         "Accept": "application/vnd.github.v3+json"
     }
 
-    # Step 2: Check if repository already exists
-    repo_check_url = f"https://api.github.com/repos/{github_username}/{repo_name}"
-    response = requests.get(repo_check_url, headers=headers)
-
+    # Check if repo exists
+    repo_url = f"https://api.github.com/repos/{github_username}/{repo_name}"
+    response = requests.get(repo_url, headers=headers)
     if response.status_code == 200:
         print(f"✅ Repository '{repo_name}' already exists. Skipping creation...")
     else:
-        print(f"🛠️ Creating repository '{repo_name}'...")
-        repo_create_url = "https://api.github.com/user/repos"
+        # Create repository
         repo_data = {"name": repo_name, "private": False}
+        response = requests.post("https://api.github.com/user/repos", headers=headers, json=repo_data)
+        if response.status_code != 201:
+            print(f"❌ Failed to create repository: {response.json()}")
+            return
 
-        response = requests.post(repo_create_url, headers=headers, json=repo_data)
-
-        if response.status_code not in [200, 201]:
-            return {"error": "Failed to create GitHub repository", "details": response.json()}
-
-    # Step 3: Initialize Git repo (if not already initialized)
+    # Initialize local repo, commit, and push
     os.system("git init")
-
-    # Step 4: Set remote URL with authentication
-    os.system(f"git remote remove origin")  # Remove existing remote (if any)
     os.system(f"git remote add origin https://{github_username}:{github_token}@github.com/{github_username}/{repo_name}.git")
-
-    # Step 5: Create index.html with email inside a comment
-    index_html_content = f"""<html><body>
+    
+    # Create index.html with hidden email
+    index_html = f"""<html><body>
     <!--email_off-->{email}<!--/email_off-->
     </body></html>"""
-
     with open("index.html", "w") as f:
-        f.write(index_html_content)
+        f.write(index_html)
 
-    # Step 6: Commit and push changes without password prompt
     os.system("git add .")
-    os.system('git commit -m "Initial commit"')
-    os.system("git branch -M main")  # Ensure branch is 'main'
-    os.system("git push -u origin main")  # No password prompt
+    os.system("git commit -m 'Initial commit'")
+    os.system("git push -u origin main")
 
-    # Step 7: Enable GitHub Pages
+    # Enable GitHub Pages
     pages_url = f"https://api.github.com/repos/{github_username}/{repo_name}/pages"
     pages_data = {"source": {"branch": "main", "path": "/"}}
-    
-    response = requests.post(pages_url, headers=headers, json=pages_data)
-    if response.status_code not in [200, 201]:
-        return {"error": "Failed to enable GitHub Pages", "details": response.json()}
+    requests.post(pages_url, headers=headers, json=pages_data)
 
-    print("🚀 GitHub Pages enabled. Waiting for deployment...")
-    time.sleep(30)  # Allow time for deployment
+    # Wait for deployment
+    wait_for_github_pages(github_username, repo_name, headers)
 
-    # Step 8: Construct the GitHub Pages URL
-    github_pages_url = f"https://{github_username}.github.io/{repo_name}/"
+    # Construct GitHub Pages URL
+    pages_url = f"https://{github_username}.github.io/{repo_name}/"
+    print(f"🚀 GitHub Pages URL: {pages_url}")
 
-    # Step 9: Send a curl request to verify the page
+    # Send API request with the GitHub Pages URL
     api_url = "http://127.0.0.1:8000/api/"
-    files = {
-        "question": (None, f"What is the GitHub Pages URL? The email is hidden inside: <!--email_off-->{email}<!--/email_off-->.")
-    }
+    files = {"question": (None, f"What is the GitHub Pages URL? The email is hidden inside: <!--email_off-->{email}<!--/email_off-->")}
     response = requests.post(api_url, files=files)
 
-    return {"GitHub Pages URL": github_pages_url, "API Response": json.loads(response.text)}
+    return json.loads(response.text)
+
+# Run function
+solve_github_pages_question()
 
 @app.post("/api/")
 async def solve_assignment(
