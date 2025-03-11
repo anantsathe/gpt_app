@@ -581,8 +581,6 @@ def solve_github_pages_question():
 
     return json.loads(response.text)
 
-# Run function
-solve_github_pages_question()
 
 @app.post("/api/")
 async def solve_assignment(
