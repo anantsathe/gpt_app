@@ -1,0 +1,215 @@
+GA-1 , Qu. 1 ----
+GA-1 , Qu. 2 ----
+
+GA-1 , Qu. 3 ----Giving correct answer 
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Download 'README.md'. In the directory where you downloaded it, make sure it is called README.md, and run npx -y prettier@3.4.2 README.md | sha256sum. What is the output of the command?" \
+  -F "file=@README.md"
+
+
+GA-1 , Qu. 4 ----Giving correct answer -- as on 8-Mar-25
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Let's make sure you can write formulas in Google Sheets. Type this formula into Google Sheets. (It won't work in Excel)
+
+=SUM(ARRAY_CONSTRAIN(SEQUENCE(100, 100, 8, 6), 1, 10)). What is the result?"
+
+GA-1 , Qu. 5 ----
+GA-1 , Qu. 6 ----
+GA-1 , Qu. 7 ----
+GA-1 , Qu. 8 ----
+GA-1 , Qu. 9 ----
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Let's make sure you know how to use JSON. Sort this JSON array of objects by the value of the age field. In case of a tie, sort by the name field. Paste the resulting JSON below without any spaces or newlines.
+
+[{"name":"Alice","age":53},{"name":"Bob","age":5},{"name":"Charlie","age":56},{"name":"David","age":42},{"name":"Emma","age":71},{"name":"Frank","age":18},{"name":"Grace","age":56},{"name":"Henry","age":50},{"name":"Ivy","age":6},{"name":"Jack","age":22},{"name":"Karen","age":98},{"name":"Liam","age":93},{"name":"Mary","age":67},{"name":"Nora","age":45},{"name":"Oscar","age":41},{"name":"Paul","age":4}]
+Sorted JSON:
+"
+
+GA-1 , Qu. 10 ---- Not giving correct answer
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Download 'q-multi-cursor-json.txt' and use 'https://www.youtube.com/watch?v=4lssq0zYxv0' and convert it into a single JSON object, where key=value pairs are converted into {key: value, key: value, ...}.
+
+What's the result when you paste the JSON at 'https://tools-in-data-science.pages.dev/jsonhash' and click the Hash button?
+" \
+  -F "file=@q-multi-cursor-json.txt"
+
+
+GA-1 , Qu. 11 ----
+GA-1 , Qu. 12 ----Giving correct answer   ---- as on 8-Mar-25
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Download 'q-unicode-data.zip' and process the files in  which contains three files with different encodings:
+
+data1.csv: CSV file encoded in CP-1252
+data2.csv: CSV file encoded in UTF-8
+data3.txt: Tab-separated file encoded in UTF-16
+Each file has 2 columns: symbol and value. Sum up all the values where the symbol matches š OR … OR Ž across all three files.
+" \
+  -F "file=@q-unicode-data.zip"
+
+
+What is the sum of all values associated with these symbols?
+GA-1 , Qu. 13 ----
+GA-1 , Qu. 14 -------- Giving correct answer   ---- as on 8-Mar-25
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Download 'q-replace-across-files.zip' and unzip it into a new folder, then replace all "IITM" (in upper, lower, or mixed case) with "IIT Madras" in all files. Leave everything as-is - don't change the line endings.
+
+What does running cat * | sha256sum in that folder show in bash?" \
+  -F "file=@q-replace-across-files.zip"
+
+
+GA-1 , Qu. 15 ---- Giving correct answer   ---- as on 8-Mar-25
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Download 'q-list-files-attributes.zip' and extract it. Use ls with options to list all files in the folder along with their date and file size.
+
+What's the total size of all files at least 7265 bytes large and modified on or after Thu, 5 Aug, 2004, 9:24 am IST? Note : Don't copy from inside the ZIP file or use Windows Explorer to unzip. That destroys the timestamps. Extract using unzip, 7-Zip or similar utilities and check the timestamps." \
+  -F "file=@q-list-files-attributes.zip"
+
+GA-1 , Qu. 16 ----Giving correct answer -- as on 8-Mar-25
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question= Download q-move-rename-files.zip and extract it. Use mv to move all files under folders into an empty folder. Then rename all files replacing each digit with the next. 1 becomes 2, 9 becomes 0, a1b9c.txt becomes a2b0c.txt.
+
+What does running grep . * | LC_ALL=C sort | sha256sum in bash on that folder show? " \
+  -F "file=@q-move-rename-files.zip"
+
+
+
+GA-1 , Qu. 17 ----Giving correct answer -- as on 8-Mar-25
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question= Download q-compare-files.zip and extract it. It has 2 nearly identical files, a.txt and b.txt, with the same number of lines.
+
+How many lines are different between a.txt and b.txt? " \
+  -F "file=@q-compare-files.zip"
+
+GA-1 , Qu. 18 ----Giving correct answer -- as on 8-Mar-25
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=There is a tickets table in a SQLite database that has columns type, units, and price. Each row is a customer bid for a concert ticket.
+
+type    units   price
+silver  130     1.89
+BRONZE  104     1.43
+Bronze  65      1.63
+SILVER  547     1.74
+SILVER  881     0.85
+gold    50      2.00
+Gold    30      3.00
+GOLD    20      4.00
+
+...
+
+What is the total sales of all the items in the 'Gold' ticket type? Write SQL to calculate it."
+
+
+GA-2 , Qu. 1 ----Not working ------
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question= Write documentation in Markdown for an **imaginary** analysis of the number of steps you walked each day for a week, comparing over time and with friends. The Markdown must include:
+
+Top-Level Heading: At least 1 heading at level 1, e.g., # Introduction
+Subheadings: At least 1 heading at level 2, e.g., ## Methodology
+Bold Text: At least 1 instance of bold text, e.g., **important**
+Italic Text: At least 1 instance of italic text, e.g., *note*
+Inline Code: At least 1 instance of inline code, e.g., sample_code
+Code Block: At least 1 instance of a fenced code block, e.g.
+
+print("Hello World")
+Bulleted List: At least 1 instance of a bulleted list, e.g., - Item
+Numbered List: At least 1 instance of a numbered list, e.g., 1. Step One
+Table: At least 1 instance of a table, e.g., | Column A | Column B |
+Hyperlink: At least 1 instance of a hyperlink, e.g., [Text](https://example.com)
+Image: At least 1 instance of an image, e.g., ![Alt Text](https://example.com/image.jpg)
+Blockquote: At least 1 instance of a blockquote, e.g., > This is a quote"
+
+GA-2 , Qu. 2----Giving correct answer -- as on 10-Mar-25
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question= Download the image 'shapes.png' below and compress it losslessly to an image that is less than 1,500 bytes.By losslessly, we mean that every pixel in the new image should be identical to the original image.
+
+Upload your losslessly compressed image (less than 1,500 bytes) " \
+  -F "file=@shapes.png"
+
+GA-2 , Qu. 3
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question= Publish a page using GitHub Pages that showcases your work. Ensure that your email address 22f1001679@ds.study.iitm.ac.in is in the page's HTML.
+
+GitHub pages are served via CloudFlare which obfuscates emails. So, wrap your email address inside a:
+
+<!--email_off-->22f1001679@ds.study.iitm.ac.in<!--/email_off-->
+What is the GitHub Pages URL? It might look like: https://[USER].github.io/[REPO]/
+
+Note : If a recent change that's not reflected, add ?v=1, ?v=2 to the URL to bust the cache.
+"
+ 
+
+GA-2 , Qu. 4 ----Giving correct answer -- as on 9-Mar-25
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "question=Let's make sure you can access Google Colab. Run this program on Google Colab, allowing all required access to your email ID: 22f1001679@ds.study.iitm.ac.in
+
+import hashlib
+import requests
+from google.colab import auth
+from oauth2client.client import GoogleCredentials
+
+auth.authenticate_user()
+creds = GoogleCredentials.get_application_default()
+token = creds.get_access_token().access_token
+response = requests.get(
+  'https://www.googleapis.com/oauth2/v1/userinfo',
+  params={'alt': 'json'},
+  headers={'Authorization': f'Bearer {token}'}
+)
+email = response.json()['22f1001679@ds.study.iitm.ac.in']
+hashlib.sha256(f'{email} {creds.token_expiry.year}'.encode()).hexdigest()[-5:]
+What is the result? (It should be a 5-character string)
+"
+
+GA-2 , Qu. 5----Giving correct answer -- as on 9-Mar-25
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Download this'lenna.webp' image. Create a new Google Colab notebook and run this code (after fixing a mistake in it) to calculate the number of pixels with a certain minimum brightness:
+
+import numpy as np
+from PIL import Image
+from google.colab import files
+import colorsys
+
+# There is a mistake in the line below. Fix it
+image = Image.open(list(files.upload().keys)[0])
+
+rgb = np.array(image) / 255.0
+lightness = np.apply_along_axis(lambda x: colorsys.rgb_to_hls(*x)[1], 2, rgb)
+light_pixels = np.sum(lightness > 0.055)
+print(f'Number of pixels with lightness > 0.055: {light_pixels}')
+What is the result? (It should be a number)
+
+"\
+  -F "file=@lenna.webp"
+
+GA-2 , Qu. 6
+GA-2 , Qu. 7
+GA-2 , Qu. 8
+GA-2 , Qu. 9
+GA-2 , Qu. 10
+
+
+
+

@@ -1,0 +1,351 @@
+GA-1, Q16
+
+Give me single function to solve below question ( curl request) . Though the question is asking to perform various steps to find out the answer, all this to be performed in the same function and function should return json object as answer for example  { 
+  "answer": "1234567890"
+}
+
+Curl request : 
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question= Download q-move-rename-files.zip and extract it. Use mv to move all files under folders into an empty folder. Then rename all files replacing each digit with the next. 1 becomes 2, 9 becomes 0, a1b9c.txt becomes a2b0c.txt.
+
+What does running grep . * | LC_ALL=C sort | sha256sum in bash on that folder show? " \
+  -F "file=@q-move-rename-files.zip"
+
+zip file is attached for reference. 
+Also , I want to integrate above function with may main fastAPI app. 
+
+
+GA-1, Q17
+
+Give me single python function to solve below question ( curl request) . Though the question is asking to perform various steps to find out the answer, all this to be performed in the same function and function should return json object as answer for example :
+  { 
+  "answer": "1234567890"
+  }
+
+Curl request : 
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question= Download q-compare-files.zip and extract it. It has 2 nearly identical files, a.txt and b.txt, with the same number of lines.
+
+How many lines are different between a.txt and b.txt? " \
+  -F "file=@q-compare-files.zip"
+
+zip file is attached for reference. 
+Also , I want to integrate above function with my main fastAPI app. If there are any changes to be done in end point of main fastAPI app for the new function , it has to be done without disturbing the existing end point so that the ability ot app to tackle other problems is not impacted.  
+
+
+GA-1, Q14
+
+Give me single python function to solve below question ( curl request) . Though the question is asking to perform various steps to find out the answer, all this to be performed in the same function and function should return json object as answer for example :
+  { 
+  "answer": "1234567890"
+  }
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Download 'q-replace-across-files.zip' and unzip it into a new folder, then replace all "IITM" (in upper, lower, or mixed case) with "IIT Madras" in all files. Leave everything as-is - don't change the line endings.
+
+What does running cat * | sha256sum in that folder show in bash?" \
+  -F "file=@q-replace-across-files.zip"
+
+zip file is attached for reference. 
+Also , I want to integrate above function with my main fastAPI app. If there are any changes to be done in end point of main fastAPI app for the new function , it has to be done without disturbing the existing end point so that the ability of app to tackle other problems is not impacted. 
+
+
+GA-1, Q12
+
+Give me single python function to solve below question ( curl request) . Though the question is asking to perform various steps to find out the answer, all this to be performed in the same function and function should return json object as answer for example :
+  { 
+  "answer": "1234567890"
+  }
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Download 'q-unicode-data.zip' and process the files in  which contains three files with different encodings:
+
+data1.csv: CSV file encoded in CP-1252
+data2.csv: CSV file encoded in UTF-8
+data3.txt: Tab-separated file encoded in UTF-16
+Each file has 2 columns: symbol and value. Sum up all the values where the symbol matches š OR … OR Ž across all three files.
+" \
+  -F "file=@q-unicode-data.zip"
+
+zip file is attached for reference. 
+Also , I want to integrate above function with my main fastAPI app. If there are any changes to be done in end point of main fastAPI app for the new function , it has to be done without disturbing the existing end point so that the ability of app to tackle other problems is not impacted.
+
+
+GA-1, Q10
+
+Give me single python function to solve below question ( curl request) . Though the question is asking to perform various steps to find out the answer, all this to be performed in the same function and function should return json object as answer, for example :
+  { 
+  "answer": "1234567890"
+  }
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Download 'q-multi-cursor-json.txt' and use multi-cursors and convert it into a single JSON object, where key=value pairs are converted into {key: value, key: value, ...}.
+
+What's the result when you paste the JSON at 'https://tools-in-data-science.pages.dev/jsonhash' and click the Hash button?
+" \
+  -F "file=@q-multi-cursor-json.txt"
+
+zip file is attached for reference. 
+Also , I want to integrate above function with my main fastAPI app. If there are any changes to be done in end point of main fastAPI app for the new function , it has to be done without disturbing the existing end point so that the ability of app to tackle other problems is not impacted.
+
+GA-1, Q9
+
+Give me single python function to solve below question ( curl request) . Though the question is asking to perform various steps to find out the answer, all this to be performed in the same function and function should return json object as answer, for example :
+  { 
+  "answer": "1234567890"
+  }
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Let's make sure you know how to use JSON. Sort this JSON array of objects by the value of the age field. In case of a tie, sort by the name field. Paste the resulting JSON below without any spaces or newlines.
+
+[{"name":"Alice","age":53},{"name":"Bob","age":5},{"name":"Charlie","age":56},{"name":"David","age":42},{"name":"Emma","age":71},{"name":"Frank","age":18},{"name":"Grace","age":56},{"name":"Henry","age":50},{"name":"Ivy","age":6},{"name":"Jack","age":22},{"name":"Karen","age":98},{"name":"Liam","age":93},{"name":"Mary","age":67},{"name":"Nora","age":45},{"name":"Oscar","age":41},{"name":"Paul","age":4}]
+Sorted JSON:
+"
+
+zip file is attached for reference. 
+Also , I want to integrate above function with my main fastAPI app. If there are any changes to be done in end point of main fastAPI app for the new function , it has to be done without disturbing the existing end point so that the ability of app to tackle other problems is not impacted.
+
+My existing end point is as below, integrate new end point with this, keeping existing logic intact / without disturbing other functionalities of main fastAPI app:
+
+@app.post("/api/")
+async def solve_assignment(
+    question: str = Form(...),
+    file: Optional[UploadFile] = File(None)
+):
+    # Existing checks (Google Sheets, SQL, etc.)
+    sheets_result = evaluate_google_sheets_formula(question)
+    if sheets_result:
+        return sheets_result
+
+    sql_result = process_sqlite_question(question)
+    if sql_result:
+        return sql_result
+
+    if file:
+        zip_path = f"/tmp/{file.filename}"
+        with open(zip_path, "wb") as buffer:
+            buffer.write(await file.read())
+
+        # Check for different types of processing
+        if "move" in question.lower() and "rename" in question.lower() and "sha256sum" in question.lower():
+            return process_zip_move_rename_hash(zip_path)
+
+        if "compare" in question.lower() and "lines" in question.lower():
+            return process_zip_and_compare_files(zip_path)
+
+        if "replace" in question.lower() and "sha256sum" in question.lower():
+            return process_zip_replace_and_hash(zip_path)
+
+        if "unicode" in question.lower() and "sum" in question.lower():
+            return process_unicode_zip(zip_path)
+
+        return process_zip_and_calculate_size(zip_path)
+
+    return {"message": "No valid question type detected", "question": question}
+
+
+My existing end point is as below, integrate new end point with this, keeping existing logic intact / without disturbing other functionalities of main fastAPI app:
+
+@app.post("/api/")
+async def solve_assignment(
+    question: str = Form(...),
+    file: Optional[UploadFile] = File(None)
+):
+    # Existing checks (Google Sheets, SQL, etc.)
+    sheets_result = evaluate_google_sheets_formula(question)
+    if sheets_result:
+        return sheets_result
+
+    sql_result = process_sqlite_question(question)
+    if sql_result:
+        return sql_result
+
+    if file:
+        file_path = f"/tmp/{file.filename}"
+        with open(file_path, "wb") as buffer:
+            buffer.write(await file.read())
+
+        # Check for different types of processing
+        if "move" in question.lower() and "rename" in question.lower() and "sha256sum" in question.lower():
+            return process_zip_move_rename_hash(file_path)
+
+        if "compare" in question.lower() and "lines" in question.lower():
+            return process_zip_and_compare_files(file_path)
+
+        if "replace" in question.lower() and "sha256sum" in question.lower():
+            return process_zip_replace_and_hash(file_path)
+
+        if "unicode" in question.lower() and "sum" in question.lower():
+            return process_unicode_zip(file_path)
+
+        if "multi-cursor" in question.lower() and "json" in question.lower() and "hash" in question.lower():
+            return process_text_to_json_hash(file_path)
+
+        return process_zip_and_calculate_size(file_path)
+
+    return {"message": "No valid question type detected", "question": question}
+
+
+GA-2, Q4
+
+Give me single python function to solve below question ( curl request) . Though the question is asking to perform various steps to find out the answer, all this to be performed in the same function and function should return json object as answer, for example :
+  { 
+  "answer": "1234567890"
+  }
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Let's make sure you can access Google Colab. Run this program on Google Colab, allowing all required access to your email ID: 22f1001679@ds.study.iitm.ac.in
+
+import hashlib
+import requests
+from google.colab import auth
+from oauth2client.client import GoogleCredentials
+
+auth.authenticate_user()
+creds = GoogleCredentials.get_application_default()
+token = creds.get_access_token().access_token
+response = requests.get(
+  "https://www.googleapis.com/oauth2/v1/userinfo",
+  params={"alt": "json"},
+  headers={"Authorization": f"Bearer {token}"}
+)
+email = response.json()["email"]
+hashlib.sha256(f"{email} {creds.token_expiry.year}".encode()).hexdigest()[-5:]
+What is the result? (It should be a 5-character string)
+"
+ 
+Also , I want to integrate above function with my main fastAPI app. If there are any changes to be done in end point of main fastAPI app for the new function , it has to be done without disturbing the existing end point so that the ability of app to tackle other problems is not impacted.
+
+
+My existing end point is as below, integrate new end point with this, keeping existing logic intact / without disturbing other functionalities of main fastAPI app:
+
+@app.post("/api/")
+async def solve_assignment(
+    question: str = Form(...),
+    file: Optional[UploadFile] = File(None)
+):
+    # Check for JSON sorting question
+    if "Sort this JSON array of objects" in question and "Sorted JSON" in question:
+        return process_and_sort_json(question)
+
+    # Existing checks (Google Sheets, SQL, etc.)
+    sheets_result = evaluate_google_sheets_formula(question)
+    if sheets_result:
+        return sheets_result
+
+    sql_result = process_sqlite_question(question)
+    if sql_result:
+        return sql_result
+
+    if file:
+        file_path = f"/tmp/{file.filename}"
+        with open(file_path, "wb") as buffer:
+            buffer.write(await file.read())
+
+        # Check for different types of processing
+        if "move" in question.lower() and "rename" in question.lower() and "sha256sum" in question.lower():
+            return process_zip_move_rename_hash(file_path)
+
+        if "compare" in question.lower() and "lines" in question.lower():
+            return process_zip_and_compare_files(file_path)
+
+        if "replace" in question.lower() and "sha256sum" in question.lower():
+            return process_zip_replace_and_hash(file_path)
+
+        if "unicode" in question.lower() and "sum" in question.lower():
+            return process_unicode_zip(file_path)
+
+        if "multi-cursor" in question.lower() and "json" in question.lower() and "hash" in question.lower():
+            return process_text_to_json_hash(file_path)
+
+        return process_zip_and_calculate_size(file_path)
+
+    return {"message": "No valid question type detected", "question": question}
+
+
+GA-2, Q5
+
+Give me single python function to solve below question ( curl request) . Though the question is asking to perform various steps to find out the answer, all this to be performed in the same function and function should return json object as answer, for example :
+  { 
+  "answer": "1234567890"
+  }
+
+curl -X POST "http://127.0.0.1:8000/api/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "question=Download this'lenna.webp' image. Create a new Google Colab notebook and run this code (after fixing a mistake in it) to calculate the number of pixels with a certain minimum brightness:
+
+import numpy as np
+from PIL import Image
+from google.colab import files
+import colorsys
+
+# There is a mistake in the line below. Fix it
+image = Image.open(list(files.upload().keys)[0])
+
+rgb = np.array(image) / 255.0
+lightness = np.apply_along_axis(lambda x: colorsys.rgb_to_hls(*x)[1], 2, rgb)
+light_pixels = np.sum(lightness > 0.055)
+print(f'Number of pixels with lightness > 0.055: {light_pixels}')
+What is the result? (It should be a number)
+
+"\
+  -F "file=@lenna.webp"
+
+zip file is attached for reference. 
+Also , I want to integrate above function with my main fastAPI app. If there are any changes to be done in end point of main fastAPI app for the new function , it has to be done without disturbing the existing end point so that the ability of app to tackle other problems is not impacted.
+
+
+My existing end point is as below, integrate new end point with this, keeping existing logic intact / without disturbing other functionalities of main fastAPI app:
+
+@app.post("/api/")
+async def solve_assignment(
+    question: str = Form(...),
+    file: Optional[UploadFile] = File(None)
+):
+    # Check for Google Colab question and process it
+    if "Run this program on Google Colab" in question and "22f1001679@ds.study.iitm.ac.in" in question:
+        return process_google_colab_question(question)
+
+    # Existing checks (JSON sorting, Google Sheets, SQL, etc.)
+    if "Sort this JSON array of objects" in question and "Sorted JSON" in question:
+        return process_and_sort_json(question)
+
+    sheets_result = evaluate_google_sheets_formula(question)
+    if sheets_result:
+        return sheets_result
+
+    sql_result = process_sqlite_question(question)
+    if sql_result:
+        return sql_result
+
+    if file:
+        file_path = f"/tmp/{file.filename}"
+        with open(file_path, "wb") as buffer:
+            buffer.write(await file.read())
+
+        if "move" in question.lower() and "rename" in question.lower() and "sha256sum" in question.lower():
+            return process_zip_move_rename_hash(file_path)
+
+        if "compare" in question.lower() and "lines" in question.lower():
+            return process_zip_and_compare_files(file_path)
+
+        if "replace" in question.lower() and "sha256sum" in question.lower():
+            return process_zip_replace_and_hash(file_path)
+
+        if "unicode" in question.lower() and "sum" in question.lower():
+            return process_unicode_zip(file_path)
+
+        if "multi-cursor" in question.lower() and "json" in question.lower() and "hash" in question.lower():
+            return process_text_to_json_hash(file_path)
+
+        return process_zip_and_calculate_size(file_path)
+
+    return {"message": "No valid question type detected", "question": question}
+
