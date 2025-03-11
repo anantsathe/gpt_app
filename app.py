@@ -505,7 +505,7 @@ def compress_image_losslessly(input_path: str, output_path: str) -> int:
 # GA-2 Q2
 def solve_github_pages_question():
     # Step 1: Define GitHub repository details
-    github_username = "your-username"  # Replace with your GitHub username
+    github_username = "anantsathe"  # Replace with your GitHub username
     repo_name = "portfolio"  # Replace with the repository name
     email = "22f1001679@ds.study.iitm.ac.in"
     github_token = os.getenv("GITHUB_TOKEN")  # Ensure token is set in env variables
